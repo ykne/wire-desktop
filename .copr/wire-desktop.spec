@@ -35,10 +35,21 @@ License:        GPL-3.0
 URL:            https://wire.com
 Source0:        %{name}-%{version}.tar.gz
 
+# git: @wireapp/copy-config's postinstall step (run by `yarn install`) shells
+# out to `git --version` unconditionally; not present in the minimal target
+# chroot by default (caught by a real Copr build: "git: command not found").
+BuildRequires:  git
 BuildRequires:  nodejs22-bin
 BuildRequires:  gcc-c++
 BuildRequires:  make
 BuildRequires:  python3
+# python3-setuptools: provides the distutils compat shim node-gyp's bundled
+# gyp needs (`from distutils.version import StrictVersion`) -- Python 3.12+
+# dropped distutils from the stdlib entirely. Without this, native module
+# rebuilds (e.g. registry-js) fail with "ModuleNotFoundError: No module named
+# 'distutils'" (also caught by a real Copr build, not by local --nodeps
+# testing, since this dev machine already has a working distutils shim).
+BuildRequires:  python3-setuptools
 BuildRequires:  cpio
 
 Requires:       alsa-lib
