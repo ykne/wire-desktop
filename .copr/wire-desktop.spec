@@ -58,6 +58,11 @@ BuildRequires:  python3
 # testing, since this dev machine already has a working distutils shim).
 BuildRequires:  python3-setuptools
 BuildRequires:  cpio
+# libxcrypt-compat: electron-builder's bundled fpm ships a prebuilt Ruby
+# interpreter linked against the legacy libcrypt.so.1 ABI, which modern
+# Fedora's libxcrypt only provides via this compat package (caught by a real
+# Copr build: "ruby: error while loading shared libraries: libcrypt.so.1").
+BuildRequires:  libxcrypt-compat
 
 Requires:       alsa-lib
 Requires:       libnotify
