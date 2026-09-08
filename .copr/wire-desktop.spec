@@ -40,6 +40,13 @@ Source0:        %{name}-%{version}.tar.gz
 # chroot by default (caught by a real Copr build: "git: command not found").
 BuildRequires:  git
 BuildRequires:  nodejs22-bin
+# npm: not provided by nodejs22-bin itself. electron-builder's own internal
+# node-module-collector spawns `npm list ...` directly (independent of the
+# yarn/corepack tooling this build otherwise uses) to enumerate dependencies
+# for packaging; without it the RPM is silently never written to wrap/dist/
+# (caught by a real Copr build: "spawn npm ENOENT", %install's `ls wrap/dist/*.rpm`
+# then finding nothing).
+BuildRequires:  nodejs22-npm-bin
 BuildRequires:  gcc-c++
 BuildRequires:  make
 BuildRequires:  python3
