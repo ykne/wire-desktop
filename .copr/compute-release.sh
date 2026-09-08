@@ -10,7 +10,7 @@ set -u
 owner="ykner"
 project="wire-desktop"
 pkg="wire-desktop"
-upstream_version="$1"
+upstream_version="${1:-}"
 
 last_json=$(curl -sf "https://copr.fedorainfracloud.org/api_3/package?ownername=${owner}&projectname=${project}&packagename=${pkg}&with_latest_build=true" 2>/dev/null)
 last_version_release=$(printf '%s' "$last_json" | grep -oE '"version": *"[^"]*"' | head -1 | sed -E 's/.*"([^"]*)"$/\1/')
