@@ -25,14 +25,18 @@ Cross platform desktop app, wrapping the [wire-webapp](https://github.com/wireap
 - [Node.js](https://nodejs.org/) matching the version defined in `.node-version`
 - Npm
 - Git
-- Yarn (Install using the official instructions at https://yarnpkg.com/lang/en/docs/install/, and not using the package recommended by apt-get)
 
 ### Install Dependencies
 
 ```shell
+# Debian/Ubuntu
 sudo apt install git npm nodejs
-npm install --global yarn
+
+# Fedora
+sudo dnf install git npm nodejs
 ```
+
+This repo pins its Yarn version via `packageManager` in `package.json` and `.yarnrc.yml`, so no separate global Yarn install is needed. Invoke the pinned release directly, using whichever filename is under `.yarn/releases/` (e.g. `node .yarn/releases/yarn-3.3.1.cjs`); it's simplest to alias this as `yarn` in your shell. If your Node.js install bundles [Corepack](https://nodejs.org/api/corepack.html) (the official nodejs.org installers and nvm do; several Linux distro packages, including Fedora's, don't), running `corepack enable` once achieves the same thing automatically and lets plain `yarn` resolve the pinned version on its own.
 
 ### Clone
 
